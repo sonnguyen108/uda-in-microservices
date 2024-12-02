@@ -1,0 +1,39 @@
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+# Environment variables for image details
+env:
+  global:
+    - TAG=${TRAVIS_COMMIT:0:7}  # First 7 characters of the Git commit hash
+    - IMAGE_BACKEND_API_FEED=udagram-api-feed
+    - IMAGE_BACKEND_API_USER=udagram-api-user
+    - IMAGE_BACKEND_API_PROXY=reverseproxy
+    - IMAGE_BACKEND_API_FRONTEND=udagram-frontend
+
+# Pre-testing installs
+install:
+  - echo "nothing needs to be installed"
+
+# Run before the main script to log in to Docker Hub
+before_script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+# Main build script
+script:
+  - docker --version # Print the Docker version for logging
+  - docker-compose -f docker-compose-app-build.yaml build
+  - docker tag $IMAGE_BACKEND_API_FEED $DOCKER_USERNAME/$IMAGE_BACKEND_API_FEED:$TAG
+  - docker tag $IMAGE_BACKEND_API_USER $DOCKER_USERNAME/$IMAGE_BACKEND_API_USER:$TAG
+  - docker tag $IMAGE_BACKEND_API_PROXY $DOCKER_USERNAME/$IMAGE_BACKEND_API_PROXY:$TAG
+  - docker tag $IMAGE_BACKEND_API_FRONTEND $DOCKER_USERNAME/$IMAGE_BACKEND_API_FRONTEND:$TAG
+
+# Push images to Docker Hub after a successful build
+after_success:
+  - docker push $DOCKER_USERNAME/$IMAGE_BACKEND_API_FEED:$TAG
+  - docker push $DOCKER_USERNAME/$IMAGE_BACKEND_API_USER:$TAG
+  - docker push $DOCKER_USERNAME/$IMAGE_BACKEND_API_PROXY:$TAG
+  - docker push $DOCKER_USERNAME/$IMAGE_BACKEND_API_FRONTEND:$TAG
