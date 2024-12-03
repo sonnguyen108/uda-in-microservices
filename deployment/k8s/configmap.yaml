@@ -4,7 +4,7 @@ metadata:
   name: configmap
 data:
   POSTGRES_HOST: uda-db-2.c1ktfgp6losj.us-east-1.rds.amazonaws.com
-  POSTGRES_DB: postgres
+  POSTGRES_DB: uda-db-2
   AWS_BUCKET: uda-3
   AWS_REGION: us-east-1
   AWS_PROFILE: default
