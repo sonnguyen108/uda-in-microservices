@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: uda-frontend
-  name: uda-frontend
+    service: frontend
+  name: frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: uda-frontend
+      app: frontend
   template:
     metadata:
       labels:
-        app: uda-frontend
+        app: frontend
     spec:
       containers:
-      - name: uda-frontend
-        image: soonnguyen108/udagram-frontend:df1048c
+      - name: frontend
+        image: soonnguyen108/udagram-frontend:v6
         ports:
         - containerPort: 80
         resources:

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: uda-frontend
+  name: frontend
   labels:
-    service: uda-frontend
+    service: frontend
 spec:
   ports:
   - port: 8100
     targetPort: 80
   selector:
-    service: uda-frontend
+    service: frontend
