@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: reverseproxy
-        image: soonnguyen108/reverseproxy:df1048c
+        image: soonnguyen108/reverseproxy:356f30a
         imagePullPolicy: Always          
         resources:
           requests:
