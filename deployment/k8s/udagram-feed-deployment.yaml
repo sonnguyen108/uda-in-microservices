@@ -5,59 +5,61 @@ metadata:
     service: backend-feed
   name: backend-feed
 spec:
+  replicas: 3
   selector:
     matchLabels:
       service: backend-feed
-  replicas: 2
   template:
     metadata:
       labels:
         service: backend-feed
     spec:
       containers:
-      - image: soonnguyen108/udagram-api-feed:948cd97
-        name: backend-feed
-        imagePullPolicy: Always  
+      - name: backend-feed
+        image: soonnguyen108/udagram-api-feed:0ec8640
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always 
         resources:
           requests:
             cpu: "250m"
           limits:
-            cpu: "500m"                  
+            cpu: "500m"
         env:
         - name: URL
           valueFrom:
             configMapKeyRef:
-              name: configmap
+              name: env-configmap
               key: URL
         - name: AWS_BUCKET
           valueFrom:
             configMapKeyRef:
-              name: configmap
+              name: env-configmap
               key: AWS_BUCKET
         - name: AWS_PROFILE
           valueFrom:
             configMapKeyRef:
-              name: configmap
+              name: env-configmap
               key: AWS_PROFILE
         - name: AWS_REGION
           valueFrom:
             configMapKeyRef:
-              name: configmap
+              name: env-configmap
               key: AWS_REGION
         - name: JWT_SECRET
           valueFrom:
-            configMapKeyRef:
-              name: configmap
+            secretKeyRef:
+              name: env-secret
               key: JWT_SECRET
         - name: POSTGRES_DB
           valueFrom:
             configMapKeyRef:
-              name: configmap
+              name: env-configmap
               key: POSTGRES_DB
         - name: POSTGRES_HOST
           valueFrom:
             configMapKeyRef:
-              name: configmap
+              name: env-configmap
               key: POSTGRES_HOST
         - name: POSTGRES_PASSWORD
           valueFrom:
@@ -68,11 +70,11 @@ spec:
           valueFrom:
             secretKeyRef:
               name: env-secret
-              key: POSTGRES_USERNAME      
+              key: POSTGRES_USERNAME
         volumeMounts:
         - name: aws-secret
           mountPath: "/root/.aws/"
-          readOnly: true        
+          readOnly: true
       restartPolicy: Always
       volumes:
       - name: aws-secret

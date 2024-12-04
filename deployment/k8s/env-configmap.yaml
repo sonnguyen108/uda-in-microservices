@@ -1,12 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configmap
+  name: env-configmap
 data:
   POSTGRES_HOST: uda-db-2.c1ktfgp6losj.us-east-1.rds.amazonaws.com
-  POSTGRES_DB: uda-db-2
+  POSTGRES_DB: postgres
   AWS_BUCKET: uda-3
   AWS_REGION: us-east-1
   AWS_PROFILE: default
   URL: http://localhost:8100
-  JWT_SECRET: uda 

@@ -1,7 +1,7 @@
 
 kubectl apply -f ../aws-secret.yaml
 kubectl apply -f ../env-secret.yaml
-kubectl apply -f ../configmap.yaml
+kubectl apply -f ../env-configmap.yaml
 kubectl apply -f ../udagram-feed-deployment.yaml
 kubectl apply -f ../udagram-feed-svc.yaml
 kubectl apply -f ../udagram-user-deployment.yaml
