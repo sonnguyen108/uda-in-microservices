@@ -19,7 +19,7 @@ install:
 # Run before the main script to log in to Docker Hub
 before_script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
+  - sh ./set_env.sh
 # Main build script
 script:
   - docker --version # Print the Docker version for logging
